@@ -1,0 +1,57 @@
+import pygame
+import random
+pygame.init()
+
+screen = pygame.display.set_mode((500,500))
+pygame.display.set_caption("bounding box practice")
+clock = pygame.time.Clock()
+
+doexit = False
+
+#yellow "player" square
+xpos = 0
+ypos = 0
+width =50
+height =50
+
+#red unmoving square
+xpos2 = 200
+ypos2 = 200
+width2 = 100
+height2 = 100
+
+
+while not doexit:#game loop----------------------------------------------------------------
+  clock.tick(60)
+  #I/O section-------------------------------------------------------------------------------
+  for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+          doexit = True
+
+  if event.type == pygame.MOUSEMOTION:
+      mousePos = event.pos
+      #get yellow square to follow mouse position:
+      xpos = mousePos[0]
+      ypos = mousePos[1]
+      
+
+#BOUNDING BOX COLLISION CHECK
+  if xpos<xpos2+width2 and xpos+50>xpos2 and ypos<ypos2+height2 and ypos+50>ypos2:
+      print("collision with pink box!")
+  else:
+      print("no collsion.")
+
+  #render section--------------------------------------------------------------------------
+  screen.fill((0,0,0))
+  
+  #draw the base square
+  pygame.draw.rect(screen, (255, 0, 255), (xpos2, ypos2, width2, height2))
+  
+  #draw random rectangle
+  pygame.draw.rect(screen, (255, 255, 0), (xpos, ypos, width, height))
+  
+  pygame.display.flip()
+
+#end game loop-----------------------------------------------------------------------------
+pygame.quit()
+
